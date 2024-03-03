@@ -1,23 +1,26 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 export default function Counter() {
-  
-    function increment() {
-        console.log('increment clicked')
-    }
-
-
+    const [set, Reset] = useState(0);
 
     return (
+
+
         <div className='text-center' >
 
             <div className='container'>
-                <span className='count'>0</span>
+                <span className='count' >{set}</span>
                 <div>
-                    <button className='counter-btn'>+1</button>
+                    <button className='btn btn-dark' onClick={() => Reset(set + 1)}>+1</button>
+                    <button className='btn btn-dark' onClick={() => Reset(set - 1)}>-1</button>
+                    <button className='btn btn-dark' onClick={() => Reset(0)}>0</button>
                 </div>
-
             </div>
+            <h1>----------------------------</h1>
+
         </div>
-    )
+
+
+    );
+
 }
