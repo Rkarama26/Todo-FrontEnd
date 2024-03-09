@@ -10,7 +10,7 @@ export default function LoginComponent() {
 
 
   //Hooks ---------------
-  const [userName, setUsername] = useState('Rohitkarma')
+  const [userName, setuserName] = useState('Rohitkarma')
   const [password, setPassword] = useState('')
 
   //const [showSuccessMessage, setshowSuccessMessage] = useState(false)
@@ -20,8 +20,8 @@ export default function LoginComponent() {
 
   const authContext = useAuth();
 
-  const handleUsernameChange = (event) => {
-    setUsername(event.target.value);
+  const handleuserNameChange = (event) => {
+    setuserName(event.target.value);
     // console.log(event.target.value);
   }
 
@@ -32,10 +32,10 @@ export default function LoginComponent() {
 
   const handleSubmit = () => {
     if (authContext.login(userName, password)) {
-          navigate(`/welcome/${userName}`);
+      navigate(`/welcome/${userName}`);
     }
     else {
-          setshowErrorMessage(true);
+      setshowErrorMessage(true);
     }
   }
 
@@ -44,21 +44,27 @@ export default function LoginComponent() {
 
   return (
     <div className="Login">
-      <div>Login component </div>
+      <div className="loginHeader">
+        <h2>Login</h2>
+      </div>
+      {showErrorMessage && (
+        <div className="errorMessage alert alert-danger alert-dismissible fade show" role="alert" style={{ fontSize: '0.875rem' }}>
+          Authentication Failed
+          <button type="button" className="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      )}
+      <div className="loginForm">
 
-      {/* logic - true && 'name' > returns name  */}
-      {showErrorMessage && <div className="errorMessage">Authentication Failed</div>}
-      <div className="LoginForm ">
         <div>
-          <label htmlFor="">User Name: </label>
-          <input type="text" name="username" value={userName} onChange={handleUsernameChange} />
+          <label htmlFor="userName">userName:</label>
+          <input type="text" id="userName" name="userName" value={userName} onChange={handleuserNameChange} />
         </div>
         <div>
-          <label htmlFor="">Password:</label>
-          <input type="password" name="password" value={password} onChange={handlePasswordChange} />
+          <label htmlFor="password">Password:</label>
+          <input type="password" id="password" name="password" value={password} onChange={handlePasswordChange} />
         </div>
         <div>
-          <button type='button' name="login" onClick={handleSubmit} > Login</button>
+          <button type="button" onClick={handleSubmit}>Login</button>
         </div>
       </div>
     </div>

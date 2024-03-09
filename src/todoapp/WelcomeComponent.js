@@ -38,18 +38,11 @@ const [message, setMessage]= useState(null)
 
 
   return (
-    <div className="welcomeComponent">
-      <h1> Welcome {username}</h1>
-      <div>
-        Manage Your Todos. <Link to="/todos">Go here</Link>
-      </div>
-      <div>
-        <button className='btn btn-success mt-5' onClick={callHelloWorldApi}>
-          Call hello world api
-        </button>
-        <div className='text-info'>{message}</div>
-      </div>
-    </div>
+    <div className="welcomeComponent text-center py-5">
+    <h1 className="mb-4">Welcome {username}</h1>
+    <p className="mb-4">Manage Your Todos. <Link to="/todos" className="btn btn-primary">Go here</Link></p>
+    {message && <div className='text-info'>{message}</div>}
+</div>
   )
 }
 

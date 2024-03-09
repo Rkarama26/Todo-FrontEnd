@@ -57,13 +57,18 @@ export default function ListTodoComponent() {
 
     navigate(`/todos/${id}`)
   }
+  function   addNewTodo  () {
+    console.log("add new todo clicked ")
+    navigate(`/todos/-1`)
+  }
+
 
 
 
   return (
     <div className="container">
       <h1>Things You Want To Do!</h1>
-      {setMessage && <div className="alert alert-warning">{message}</div>}
+      {/* {setMessage && <div className="alert alert-warning">{message}</div>} */}
 
       <div className="table-responsive">
         <table className="table table-striped">
@@ -106,6 +111,7 @@ export default function ListTodoComponent() {
 
         </table>
       </div>
+      <div className="btn btn-success" onClick={addNewTodo}>Add New Todo</div>
     </div>
   )
 }

@@ -22,6 +22,9 @@ export const apiClient = axios.create(
 
     export const updateTodoApi
     = (id, todo) => apiClient.put(`/users/todos/${id}`, todo)
+   
+    export const createTodoApi
+    = (username, todo) => apiClient.put(`/users/${username}/todos}`, todo)
 
     
 

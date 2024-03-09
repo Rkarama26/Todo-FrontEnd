@@ -1,8 +1,9 @@
 
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
-import { retreiveTodoApi, updateTodoApi } from './TodoApiService';
+import { createTodoApi, retreiveTodoApi, updateTodoApi } from './TodoApiService';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
+import moment from 'moment';
 
 export default function TodoComponent() {
 
@@ -12,19 +13,22 @@ export default function TodoComponent() {
     const [description, setDescription] = useState('')
     const [targetDate, setTargetDate] = useState('')
 
-    const navigate =  useNavigate()
+    const navigate = useNavigate()
 
-    useEffect(() => {
-        retreiveTodos()
-    }, )
+    useEffect(
+        () => retreiveTodos(),
+        [id]
+    )
 
     function retreiveTodos() {
-        retreiveTodoApi(id)
-            .then(response => {
-                setDescription(response.data.description)
-                setTargetDate(response.data.targetDate)
-            })
-            .catch(error => console.log(error))
+        if (id !== -1) {
+            retreiveTodoApi(id)
+                .then(response => {
+                    setDescription(response.data.description)
+                    setTargetDate(response.data.targetDate)
+                })
+                .catch(error => console.log(error))
+        }
     }
 
     function onSubmit(values) {
@@ -39,14 +43,29 @@ export default function TodoComponent() {
             isDone: false
         }
         console.log(todo)
-        updateTodoApi(id, todo)
-            .then(response => {
-                console.log(response)
-                console.log("response")
-                navigate('/todos')
-            })
-            .catch(error => console.log(error))
 
+        if (id === -1) {
+            createTodoApi()
+            createTodoApi('rohit', todo)
+                .then(response => {
+                    console.log(response)
+                    console.log("response")
+                    navigate('/todos')
+                })
+                .catch(error => console.log(error))
+        }
+
+        else 
+        {
+            updateTodoApi(id, todo)
+                .then(response => {
+                    console.log(response)
+                    console.log("response")
+                    navigate('/todos')
+                })
+                .catch(error => console.log(error))
+
+        }
     }
 
     function validate(values) {
@@ -54,7 +73,9 @@ export default function TodoComponent() {
         if (values.description.length < 5) {
             errors.description = 'Enter at least 5 characters'
         }
-        if (!values.targetDate) {
+        if (!values.targetDate == null || values.targetDate == '' 
+                    || !moment(values.targetDate).isValid()) 
+        {
             errors.targetDate = 'Enter a target date'
         }
 
