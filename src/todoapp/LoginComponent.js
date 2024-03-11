@@ -10,7 +10,7 @@ export default function LoginComponent() {
 
 
   //Hooks ---------------
-  const [userName, setuserName] = useState('Rohitkarma')
+  const [userName, setuserName] = useState('rohit')
   const [password, setPassword] = useState('')
 
   //const [showSuccessMessage, setshowSuccessMessage] = useState(false)
@@ -30,8 +30,9 @@ export default function LoginComponent() {
     // console.log(event.target.value);
   }
 
-  const handleSubmit = () => {
-    if (authContext.login(userName, password)) {
+  async function handleSubmit()
+   {
+    if (await authContext.login(userName, password)) {
       navigate(`/welcome/${userName}`);
     }
     else {
